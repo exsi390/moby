@@ -922,9 +922,10 @@
                         value = 'm';
                     }
                 }
-
+                
+                // image hidden input: use uploaded Cloudinary url (wymuś HTTPS!)
                 if (rawKey === 'image' && imageURLInput.value) {
-                    value = imageURLInput.value;
+                    value = imageURLInput.value.replace(/^http:\/\//i, 'https://');
                 }
 
                 const finalKey = nameMap[rawKey] || rawKey;
