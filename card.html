@@ -1,211 +1,610 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mDowód</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
 
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
 
-<!-- saved from url=(0542)https://xed666.github.io/qaz/card.html?name=Ksawery&urzad=Zakliczyn&surname=Matras&sex=m&birthday=20.03.2008&pesel=08232002957&mdow_series=MWYC+11948&issue_date=21.03.2026&expiry_date=21.03.2031&father_name=Maciej&mother_name=Kinga&nationality=POLSKIE&birthPlace=Tuch%C3%B3w&countryOfBirth=Polska&adress1=krakowska+6&adress2=32-840&city=Zakliczyn&home_date=20.03.2009&familyName=Matras&fathersFamilyName=Matras&mothersFamilyName=Nowak&image=http%3A%2F%2Fres.cloudinary.com%2Fdwzirgobv%2Fimage%2Fupload%2Fv1791817950%2Fflawvhlaolmtpbjhuqfr.jpg -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
-    <title>mObywatel</title>
-    
-    <link rel="stylesheet" href="./card_files/card.css">
-    <link rel="stylesheet" href="./card_files/main.css">
-    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
-    <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
-    <meta name="format-detection" content="telephone=no">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
-    
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> 
-    
-    <meta name="theme-color" content="#121212"> 
-<link id="chromealerabat-link" rel="stylesheet" type="text/css" href="chrome-extension://mglaecnkoojmmphhoapbkfodjjhmcoec/content.css"><style></style></head>
+        /* Ramka telefonu */
+        .phone-frame {
+            width: 100%;
+            max-width: 480px;
+            background-color: #121212;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
+        }
+
+        /* Nagłówek */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            color: #007aff;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .header-title {
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .help-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           POZIOMA KARTA DOWODU
+           ========================================= */
+        .id-card-wrapper {
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .id-card {
+            width: 100%;
+            background: linear-gradient(135deg, #fdfbfb 0%, #f4f6f8 50%, #eef2f5 100%);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #d0d7de;
+        }
+
+        .watermark-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 50px;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.06);
+            z-index: 0;
+            pointer-events: none;
+            letter-spacing: 5px;
+            white-space: nowrap;
+        }
+
+        .card-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1;
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .card-photo {
+            width: 100%;
+            height: 120px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-flag {
+            width: 60px;
+            height: 35px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .flag-top { flex: 1; background-color: #ffffff; }
+        .flag-bottom { flex: 1; background-color: #dc143c; }
+
+        .card-eagle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-eagle img {
+            height: 30px;
+            width: auto;
+        }
+
+        .card-eagle-text {
+            display: flex;
+            flex-direction: column;
+            font-size: 8px;
+            color: #333;
+            line-height: 1.1;
+            font-weight: 500;
+        }
+
+        .card-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .card-data-field {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .card-data-label {
+            font-size: 8px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .card-data-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+
+        .card-bottom-data {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: right;
+            z-index: 1;
+        }
+
+        .card-bottom-item {
+            font-size: 7px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        /* ========================================= */
+
+        /* Status ważności */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 15px 20px 15px;
+            z-index: 1;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid #4ade80;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        /* Szybkie akcje */
+        .quick-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 10px 30px 10px;
+            z-index: 1;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            width: 70px;
+            text-align: center;
+        }
+
+        .action-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #222;
+            border: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #007aff;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover .action-icon {
+            background-color: #333;
+        }
+
+        /* Sekcje ze szczegółami */
+        .details-section {
+            background-color: #1c1c1e;
+            border-radius: 15px;
+            margin: 0 15px 15px 15px;
+            padding: 15px 20px;
+            z-index: 1;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2c2c2e;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .detail-row:first-child {
+            padding-top: 0;
+        }
+
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .btn-small {
+            background-color: #007aff;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Dolna nawigacja */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            background-color: #1c1c1e;
+            border-top: 1px solid #2c2c2e;
+            margin-top: auto;
+            z-index: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #888;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #007aff;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
 <body>
-    <div class="top_grid">
-        <div class="action_grid">
-            <img src="./card_files/aXIO2NG.png" class="back_img">
-            <p onclick="sendTo(&#39;home&#39;)" class="back_text">Wróć</p>
-        </div>
-        <p class="title_text">mDowód</p>
-        <img src="./card_files/VHNv1TC.png" class="help_img">
-    </div>
 
-    <div class="bottom_bar">
-        <div class="bottom_bar_grid">
-            <div class="bottom_element_grid" send="home">
-                <div class="bottom_element_image home home_open"></div>
-                <p class="bottom_element_text open">Dokumenty</p>
-            </div>
-            <div class="bottom_element_grid" send="services">
-                <div class="bottom_element_image services"></div>
-                <p class="bottom_element_text">Usługi</p>
-            </div>
-            <div class="bottom_element_grid" send="qr">
-                <div class="bottom_element_image qr"></div>
-                <p class="bottom_element_text">Kod QR</p>
-            </div>
-            <div class="bottom_element_grid" send="more">
-                <div class="bottom_element_image more"></div>
-                <p class="bottom_element_text">Więcej</p>
-            </div>
-        </div>
-    </div>
-    <p class="time_text" id="time">Czas: 17:14:27 12.10.2026</p>
-    <div class="id_image_data">
-        <img draggable="false" class="id_image" src="./card_files/tlo_dowod.jpg">
-        <div class="inset">
+    <div class="phone-frame">
+        <div class="watermark-app"></div>
 
-        </div>
-        <div class="id_own_image" style="background-image: url(&quot;http://res.cloudinary.com/dwzirgobv/image/upload/v1791817950/flawvhlaolmtpbjhuqfr.jpg&quot;);"></div>
-        <img draggable="false" src="./card_files/I7oPp72.gif" class="flag_video">
-        <img draggable="false" src="./card_files/EbBJWYb.gif" class="eagle_video">
-        <p class="eagle_text">Rzeczpospolita<br>Polska</p>
-        <div class="id_data_grid">
-            <div class="data_holder">
-                <p class="data_title firstname" id="name">KSAWERY</p>
-                <p class="data_value">Imię (imiona)</p>
+        <!-- Nagłówek -->
+        <header>
+            <div class="back-btn">&lt; Wróć</div>
+            <div class="header-title">
+                <h1>mDowód</h1>
+                <!-- ZMIANA: Pusty span, który zostanie wypełniony przez JavaScript -->
+                <p>Czas: <span id="clock"></span></p>
             </div>
-            <div class="data_holder">
-                <p class="data_title surname" id="surname">MATRAS</p>
-                <p class="data_value">Nazwisko</p>
-            </div>
-            <div class="data_holder">
-                <p class="data_title" id="nationality">POLSKIE</p>
-                <p class="data_value">Obywatelstwo</p>
-            </div>
-            <div class="data_holder">
-                <p class="data_title" id="birthday">20.03.2008</p>
-                <p class="data_value">Data urodzenia</p>
-            </div>
-            <div class="data_holder">
-                <p class="data_title" id="pesel">08232002957</p>
-                <p class="data_value">Numer PESEL</p>
-            </div>
-        </div>
-    </div>
-    <div class="id_bottom">
-        <div class="bottom_grid">
-            <img class="bottom_image" src="./card_files/bdx9fzT.png">
-            <p class="bottom_text" style="color: #17bf2d; font-size: 17px;">Dokument ważny</p>
-        </div>
-        </div>
-    
-    
-    <div class="top-buttons">
-        <button onclick="sendTo(&#39;qr&#39;)">
-          <div class="icon-circle">
-            <img src="./card_files/DGBsoYY.png" alt="Potwierdź">
-          </div>
-          <span>Potwierdź<br>swoje&nbsp;dane</span>
+            <div class="help-icon">?</div>
+        </header>
 
-        </button>
-      
-        <button onclick="sendTo(&#39;moreid&#39;)">
-          <div class="icon-circle">
-            <img src="./card_files/2SPOxrW.png" alt="Dowód">
-          </div>
-          <span>Dane<br>dowodu<br>osobistego</span>
-        </button>
-      
-        <button onclick="sendTo(&#39;pesel&#39;)">
-            <div class="icon-circle">
-              <img src="./card_files/aDXGRtB.png" alt="PESEL">
-            </div>
-            <span>Zastrzeż PESEL</span>
-          </button>
-          
-      <button onclick="sendTo(&#39;shortcuts&#39;)">
-            <div class="icon-circle">
-              <img src="./card_files/KYGZHxe.png" alt="Więcej">
-            </div>
-            <span>Pozostałe skróty</span>
-          </button>
+        <!-- KARTA DOWODU (Pozioma) -->
+        <div class="id-card-wrapper">
+            <div class="id-card">
+                <div class="watermark-card"></div>
 
-      </div>
-            
-            <div class="card custom-card">
-                <div class="field">
-                    <label>Seria i numer mDowodu</label>
-                    <div class="value-copy">
-                        <div>
-                            <b style="font-size:27px">MWYC 24561</b>
-                            <br>
-                            <label style="font-size:14px">Dane mDowodu i dowodu<br>osobistego są inne - to dwa różne<br>dokumenty.</label>
+                <div class="card-left">
+                    <div class="card-photo">
+                        <img src="https://i.imgur.com/ALAlBjp.jpeg" alt="Zdjęcie">
+                    </div>
+                    
+                    <div class="card-flag">
+                        <div class="flag-top"></div>
+                        <div class="flag-bottom"></div>
+                    </div>
+                    
+                    <div class="card-eagle">
+                        <img src="https://i.imgur.com/vwu2tHv.png" alt="Godło">
+                        <div class="card-eagle-text">
+                            <span>Rzeczpospolita</span>
+                            <span>Polska</span>
                         </div>
-                        <button class="value-copy">Kopiuj</button> 
                     </div>
                 </div>
-            
-                <div class="field">
-                    <label>Termin ważności</label>
-                    <strong>14.07.2028</strong>
-                </div>
-            
-                <div class="field">
-                    <label>Data wydania</label>
-                    <strong>14.07.2023</strong>
-                </div>
-            
-                <div class="field">
-                    <label>Imię ojca</label>
-                    <strong>Maciej</strong>
-                </div>
-            
-                <div class="field">
-                    <label>Imię matki</label>
-                    <strong>Ewa</strong>
-                </div>
-            </div>
-            
-        <div class="bottom_holder info_holder">
-            <div class="bottom_grid">
-                <p class="bottom_text" style="color: var(--font); margin-left: 0px;">Twoje dodatkowe dane</p>
-            </div>
-            <img class="action_arrow" src="./card_files/lTxuUMF.png">
-            <div class="additional_holder">
-                <div class="additional_grid">
-                    <p class="additional_title">Nazwisko rodowe</p>
-                    <p class="additional_subtitle" id="familyName">Matras</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Płeć</p>
-                    <p class="additional_subtitle" id="sex">Mężczyzna</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Nazwisko rodowe ojca</p>
-                    <p class="additional_subtitle" id="fathersFamilyName">Matras</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Nazwisko rodowe matki</p>
-                    <p class="additional_subtitle" id="mothersFamilyName">Nowak</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Miejsce urodzenia</p>
-                    <p class="additional_subtitle" id="birthPlace">Tuchów</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Kraj urodzenia</p>
-                    <p class="additional_subtitle" id="countryOfBirth">Polska</p>
-                </div>
-                <div class="additional_grid">
-                    <p class="additional_title">Adres zameldowania na pobyt stały</p>
-                    <p class="additional_subtitle" id="adress">ul. krakowska 6<br>32-840 Zakliczyn</p>
-                </div>
-                <div class="additional_grid" style="border-bottom: none;">
-                    <p class="additional_title">Data zameldowania na pobyt stały</p>
-                    <p class="additional_subtitle home_date">06.06.2013</p>
-                </div>
-            </div>
-        </div>
-        <div class="bottom_holder" style="height: 90px; margin-bottom: 5px;">
-            <div class="bottom_update">
-                <div class="bottom_update_grid">
-                    <p class="bottom_update_text" style="margin-left: 0px;">Ostatnia aktualizacja</p>
-                    <p class="bottom_update_value" style="margin-left: 0px;">21.05.2025</p>
-                </div>
-                <button class="main_button update">Aktualizuj</button>
-            </div>
-        </div>
-    
 
-</div></body></html>
+                <div class="card-right">
+                    <div class="card-data-field">
+                        <span class="card-data-label">Imiona</span>
+                        <span class="card-data-value">KSAWERY</span>
+                    </div>
+                    <div class="card-data-field">
+                        <span class="card-data-label">Nazwisko</span>
+                        <span class="card-data-value">MATRAS</span>
+                    </div>
+                    <div class="card-data-field">
+                        <span class="card-data-label">Nr PESEL</span>
+                        <span class="card-data-value">08232002957</span>
+                    </div>
+                    <div class="card-data-field">
+                        <span class="card-data-label">Data urodzenia</span>
+                        <span class="card-data-value">20.03.2008</span>
+                    </div>
+                </div>
+
+                <div class="card-bottom-data">
+                    <div class="card-bottom-item">Seria i numer: MWYC 24561</div>
+                    <div class="card-bottom-item">Termin ważności: 14.07.2028</div>
+                    <div class="card-bottom-item">Data wydania: 14.07.2023</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="status-bar">
+            <div class="status-icon">✓</div>
+            <span>Dokument ważny</span>
+        </div>
+
+        <!-- Szybkie akcje -->
+        <div class="quick-actions">
+            <button class="action-btn">
+                <div class="action-icon">⛶</div>
+                <span>Potwierdź swoje dane</span>
+            </button>
+            <button class="action-btn">
+                <div class="action-icon">▭</div>
+                <span>Dane dowodu osobistego</span>
+            </button>
+            <button class="action-btn">
+                <div class="action-icon">🛡️</div>
+                <span>Zastrzeż PESEL</span>
+            </button>
+            <button class="action-btn">
+                <div class="action-icon">•••</div>
+                <span>Pozostałe skróty</span>
+            </button>
+        </div>
+
+        <!-- Szczegóły 1 -->
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Seria i numer mDowodu</span>
+                    <span class="detail-value">MWYC 24561</span>
+                </div>
+                <button class="btn-small">Kopiuj</button>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Termin ważności</span>
+                    <span class="detail-value">14.07.2028</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Data wydania</span>
+                    <span class="detail-value">14.07.2023</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Imię ojca</span>
+                    <span class="detail-value">Maciej</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Imię matki</span>
+                    <span class="detail-value">Ewa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Szczegóły 2 -->
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Nazwisko rodowe</span>
+                    <span class="detail-value">Matras</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Płeć</span>
+                    <span class="detail-value">Mężczyzna</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Nazwisko rodowe ojca</span>
+                    <span class="detail-value">Matras</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Nazwisko rodowe matki</span>
+                    <span class="detail-value">Nowak</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Miejsce urodzenia</span>
+                    <span class="detail-value">Tuchów</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Kraj urodzenia</span>
+                    <span class="detail-value">Polska</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Adres zameldowania na pobyt stały</span>
+                    <span class="detail-value">ul. krakowska 6<br>32-840 Zakliczyn</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Data zameldowania na pobyt stały</span>
+                    <span class="detail-value">06.06.2013</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ostatnia aktualizacja -->
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-info">
+                    <span class="detail-label">Ostatnia aktualizacja</span>
+                    <span class="detail-value">21.05.2025</span>
+                </div>
+                <button class="btn-small">Aktualizuj</button>
+            </div>
+        </div>
+
+        <!-- Dolna nawigacja -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">📄</div>
+                <span>Dokumenty</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📁</div>
+                <span>Usługi</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📷</div>
+                <span>Kod QR</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">☰</div>
+                <span>Więcej</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKRYPT ODPOWIEDZIALNY ZA CZAS -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Pobieranie elementów czasu
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Miesiące są indeksowane od 0
+            const year = now.getFullYear();
+            
+            // Formatowanie: HH:MM:SS DD.MM.YYYY
+            const timeString = `${hours}:${minutes}:${seconds} ${day}.${month}.${year}`;
+            
+            // Wstawienie do HTML
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // Uruchomienie od razu i ustawienie interwału co 1 sekundę
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
